@@ -84,3 +84,36 @@ class Game:
         pyplot.clf()
         pyplot.matshow(self.board, fignum=0, cmap='binary')
         pyplot.show()
+
+
+class Pattern:
+    """Array of cells which form a pattern."""
+
+    def __init__(self, pattern):
+        """Construct a pattern."""
+        self.grid = pattern
+
+    def flip_vertical(self):
+        """Return pattern whose columns are reversed."""
+        vert_flipped = np.array([col[::-1] for col in self.grid.T]).T
+        return Pattern(vert_flipped)
+
+    def flip_horizontal(self):
+        """Return pattern whose rows are reversed."""
+        horizontal_flipped = np.array([row[::-1] for row in self.grid])
+        return Pattern(horizontal_flipped)
+
+    def flip_diag(self):
+        """Return transpose of inputted pattern."""
+        return Pattern(self.grid.T)
+  
+    def rotate(self, n):
+        """Return pattern after n right anticlockwise rotations."""
+        if (n % 4 == 0):
+            return self
+        elif (n % 4 == 1):
+            return self.flip_diag().flip_vertical()
+        elif (n % 4 == 2):
+            return self.flip_vertical().flip_horizontal()
+        else:
+            return self.flip_diag().flip_horizontal()
