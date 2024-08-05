@@ -85,6 +85,13 @@ class Game:
         pyplot.matshow(self.board, fignum=0, cmap='binary')
         pyplot.show()
 
+    def insert(self, pattern, coords):
+        """Insert pattern at coords."""
+        width, height = pattern.grid.shape
+        x, y = coords
+        self[x - width//2:x + width//2 + 1,
+             y - height//2:y + height//2 + 1] = pattern.grid
+
 
 class Pattern:
     """Array of cells which form a pattern."""
@@ -106,7 +113,7 @@ class Pattern:
     def flip_diag(self):
         """Return transpose of inputted pattern."""
         return Pattern(self.grid.T)
-  
+
     def rotate(self, n):
         """Return pattern after n right anticlockwise rotations."""
         if (n % 4 == 0):
